@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Version>1.6</Version>
     <Authors>Marcel Garbarczyk</Authors>
@@ -23,7 +23,10 @@ Biblioteka do obsługi API Ministerstwa finansów - Biała lista podatników VAT
   
     <ItemGroup>
       <ProjectReference Include="..\WykazPodatnikow.Data\WykazPodatnikow.Data.csproj" />
-      <ProjectReference Include="..\WykazPodatnikow.SharedLib\WykazPodatnikow.SharedLib.csproj" />
     </ItemGroup>
+  
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+      <Exec Command="echo Copy files to IfsIntegration.Banking &#xD;&#xA;echo START ############################################&#xD;&#xA;xcopy &quot;$(TargetDir)*.dll&quot; &quot;D:\Programowanie\.NET CORE\LIBLARIES\IFS\IFSIntegration2\src\IFSIntegration.Banking\Vendors\WykazPodatnikow&quot; /i /d /y&#xD;&#xA;echo FINISH ############################################&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;" />
+    </Target>
   
 </Project>

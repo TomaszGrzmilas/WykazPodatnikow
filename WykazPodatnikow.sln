@@ -1,17 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29230.61
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31825.309
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WykazPodatnikow.Core", "WykazPodatnikow.Core\WykazPodatnikow.Core.csproj", "{F7136EB7-F9E4-4CEB-92D0-2F4062A43906}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WykazPodatnikow.Core", "WykazPodatnikow.Core\WykazPodatnikow.Core.csproj", "{F7136EB7-F9E4-4CEB-92D0-2F4062A43906}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WykazPodatnikow.Data", "WykazPodatnikow.Data\WykazPodatnikow.Data.csproj", "{B930D736-6008-4E01-B9F2-C243210814A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WykazPodatnikow.Data", "WykazPodatnikow.Data\WykazPodatnikow.Data.csproj", "{B930D736-6008-4E01-B9F2-C243210814A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WykazPodatnikow.SharedLib", "WykazPodatnikow.SharedLib\WykazPodatnikow.SharedLib.csproj", "{609E2F3E-C4AC-4E95-B27A-7367A8244FC3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WykazPodatnikow.Standard", "WykazPodatnikow.Standard\WykazPodatnikow.Standard.csproj", "{5871CE8D-5369-4759-97F6-FF2228ED766E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WykazPodatnikow.XUnitTest", "WykazPodatnikow.XUnitTest\WykazPodatnikow.XUnitTest.csproj", "{41791378-E3D9-4658-B59F-F64D1EB01C19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WykazPodatnikow.XUnitTest", "WykazPodatnikow.XUnitTest\WykazPodatnikow.XUnitTest.csproj", "{41791378-E3D9-4658-B59F-F64D1EB01C19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,14 +23,6 @@ Global
 		{B930D736-6008-4E01-B9F2-C243210814A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B930D736-6008-4E01-B9F2-C243210814A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B930D736-6008-4E01-B9F2-C243210814A5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{609E2F3E-C4AC-4E95-B27A-7367A8244FC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{609E2F3E-C4AC-4E95-B27A-7367A8244FC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{609E2F3E-C4AC-4E95-B27A-7367A8244FC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{609E2F3E-C4AC-4E95-B27A-7367A8244FC3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5871CE8D-5369-4759-97F6-FF2228ED766E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5871CE8D-5369-4759-97F6-FF2228ED766E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5871CE8D-5369-4759-97F6-FF2228ED766E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5871CE8D-5369-4759-97F6-FF2228ED766E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{41791378-E3D9-4658-B59F-F64D1EB01C19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{41791378-E3D9-4658-B59F-F64D1EB01C19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41791378-E3D9-4658-B59F-F64D1EB01C19}.Release|Any CPU.ActiveCfg = Release|Any CPU

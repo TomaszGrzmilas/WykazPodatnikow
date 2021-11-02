@@ -1,23 +1,20 @@
-using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace WykazPodatnikow.Data
 {
-    /// <summary>
-    ///
-    /// </summary>
-    [DataContract]
-    public class EntityCheckResponse
-    {
-        /// <summary>
-        /// Gets or Sets Exception
-        /// </summary>
-        [DataMember(Name = "exception", EmitDefaultValue = false)]
-        public Exception Exception { get; set; }
 
-        /// <summary>
-        /// Gets or Sets Result
-        /// </summary>
-        [DataMember(Name = "result", EmitDefaultValue = false)]
-        public EntityCheck Result { get; set; }
-    }
+	public record EntityCheckResponse
+	{
+		/// <summary>
+		/// Gets or Sets Exception
+		/// </summary>
+		[JsonPropertyName("exception")]
+		public Exception Exception { get; set; }
+
+		/// <summary>
+		/// Gets or Sets Result
+		/// </summary>
+		[JsonPropertyName("result")]
+		public EntityCheck Result { get; set; }
+	}
 }

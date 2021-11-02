@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace WykazPodatnikow.Data
+﻿namespace WykazPodatnikow.Data
 {
-    public enum FlatFile
-    {
-        FoundInActiveVatPayer,
-        FoundInExemptVatPayer,
-        InvalidNip,
-        InvalidBankAccount,
-        NotFound
-    }
+	public enum FlatFile
+	{
+		FoundInActiveVatPayer,
+		FoundInExemptVatPayer,
+		InvalidNip,
+		InvalidBankAccount,
+		NotFound
+	}
 }
