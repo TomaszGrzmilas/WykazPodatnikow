@@ -52,9 +52,14 @@ namespace WykazPodatnikow.Core
 			if (!nip.IsValidNIP())
 				return FlatFile.InvalidNip;
 
-			if (string.IsNullOrEmpty(bankAccount) || string.IsNullOrWhiteSpace(bankAccount) || bankAccount?.Length < 26)
-				return FlatFile.InvalidBankAccount;
+			//if (string.IsNullOrEmpty(bankAccount) || string.IsNullOrWhiteSpace(bankAccount) || bankAccount?.Length < 26)
+			//	return FlatFile.InvalidBankAccount;
 
+			if (!Extension.IsValidBankAccountNumber(bankAccount))
+			{
+				return FlatFile.InvalidBankAccount;
+			}
+			
 			switch (CheckInBody(bankAccount))
 			{
 				case FlatFile.FoundInActiveVatPayer:
