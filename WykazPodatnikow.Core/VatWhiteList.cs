@@ -22,17 +22,14 @@ namespace WykazPodatnikow.Core
 		/// Wyszukiwanie pojedynczego podmiotu po nip.
 		/// </summary>
 		/// <param name="nip"></param>
-		/// <param name="dateTime"></param>
+		/// <param name="DateOnly"></param>
 		/// <returns></returns>
-		public async Task<EntityResponse> GetDataFromNipAsync(string nip, DateTime dateTime)
+		public async Task<EntityResponse> GetDataFromNipAsync(string nip, DateOnly DateOnly)
 		{
 			string GetString = string.Empty;
 			try
 			{
-				if (!Extension.IsValidNIP(nip))
-					return new EntityResponse { Exception = new Exception { Code = "6", Message = $"Invalid Nip" } };
-
-				var Getresult = await httpClient.GetAsync($"/api/search/nip/{nip}?date={dateTime.ToString("yyyy-MM-dd")}");
+				var Getresult = await httpClient.GetAsync($"/api/search/nip/{nip}?date={DateOnly.ToString("yyyy-MM-dd")}");
 
 				GetString = await Getresult.Content.ReadAsStringAsync();
 
@@ -52,20 +49,14 @@ namespace WykazPodatnikow.Core
 		/// Wyszukiwanie podmiotow po numerach nip.
 		/// </summary>
 		/// <param name="nips"></param>
-		/// <param name="dateTime"></param>
+		/// <param name="DateOnly"></param>
 		/// <returns></returns>
-		public async Task<EntityListResponse> GetDataFromNipsAsync(string nips, DateTime dateTime)
+		public async Task<EntityListResponse> GetDataFromNipsAsync(string nips, DateOnly DateOnly)
 		{
 			string GetString = string.Empty;
 			try
 			{
-				foreach (var item in nips.Split(","))
-				{
-					if (!Extension.IsValidNIP(item))
-						return new EntityListResponse { Exception = new Exception { Code = "6", Message = $"Invalid Nip: {item}" } };
-				}
-
-				var Getresult = await httpClient.GetAsync($"/api/search/nips/{nips}?date={dateTime.ToString("yyyy-MM-dd")}");
+				var Getresult = await httpClient.GetAsync($"/api/search/nips/{nips}?date={DateOnly.ToString("yyyy-MM-dd")}");
 
 				GetString = await Getresult.Content.ReadAsStringAsync();
 
@@ -85,9 +76,9 @@ namespace WykazPodatnikow.Core
 		/// Wyszukiwanie pojedynczego podmiotu po regon.
 		/// </summary>
 		/// <param name="regon"></param>
-		/// <param name="dateTime"></param>
+		/// <param name="DateOnly"></param>
 		/// <returns></returns>
-		public async Task<EntityResponse> GetDataFromRegonAsync(string regon, DateTime dateTime)
+		public async Task<EntityResponse> GetDataFromRegonAsync(string regon, DateOnly DateOnly)
 		{
 			string GetString = string.Empty;
 			try
@@ -95,7 +86,7 @@ namespace WykazPodatnikow.Core
 				if (!Extension.IsValidREGON(regon))
 					return new EntityResponse { Exception = new Exception { Code = "6", Message = "Invalid Regon" } };
 
-				var Getresult = await httpClient.GetAsync($"/api/search/regon/{regon}?date={dateTime.ToString("yyyy-MM-dd")}");
+				var Getresult = await httpClient.GetAsync($"/api/search/regon/{regon}?date={DateOnly.ToString("yyyy-MM-dd")}");
 
 				GetString = await Getresult.Content.ReadAsStringAsync();
 
@@ -115,9 +106,9 @@ namespace WykazPodatnikow.Core
 		/// Wyszukiwanie podmiotow po numerach regon.
 		/// </summary>
 		/// <param name="regons"></param>
-		/// <param name="dateTime"></param>
+		/// <param name="DateOnly"></param>
 		/// <returns></returns>
-		public async Task<EntityListResponse> GetDataFromRegonsAsync(string regons, DateTime dateTime)
+		public async Task<EntityListResponse> GetDataFromRegonsAsync(string regons, DateOnly DateOnly)
 		{
 			string GetString = string.Empty;
 			try
@@ -128,7 +119,7 @@ namespace WykazPodatnikow.Core
 						return new EntityListResponse { Exception = new Exception { Code = "6", Message = $"Invalid Regon: {item}" } };
 				}
 
-				var Getresult = await httpClient.GetAsync($"/api/search/regons/{regons}?date={dateTime.ToString("yyyy-MM-dd")}");
+				var Getresult = await httpClient.GetAsync($"/api/search/regons/{regons}?date={DateOnly.ToString("yyyy-MM-dd")}");
 
 				GetString = await Getresult.Content.ReadAsStringAsync();
 
@@ -148,9 +139,9 @@ namespace WykazPodatnikow.Core
 		/// Zwraca EntityListResponse na podstawie podanego konta bankowego.
 		/// </summary>
 		/// <param name="bankAccount"></param>
-		/// <param name="dateTime"></param>
+		/// <param name="DateOnly"></param>
 		/// <returns></returns>
-		public async Task<EntityListResponse> GetDataFromBankAccountAsync(string bankAccount, DateTime dateTime)
+		public async Task<EntityListResponse> GetDataFromBankAccountAsync(string bankAccount, DateOnly DateOnly)
 		{
 			string GetString = string.Empty;
 			try
@@ -158,7 +149,7 @@ namespace WykazPodatnikow.Core
 				if (!Extension.IsValidBankAccountNumber(bankAccount))
 					return new EntityListResponse { Exception = new Exception { Code = "6", Message = "Invalid Bank Accounts" } };
 
-				var Getresult = await httpClient.GetAsync($"/api/search/bank-account/{bankAccount}?date={dateTime.ToString("yyyy-MM-dd")}");
+				var Getresult = await httpClient.GetAsync($"/api/search/bank-account/{bankAccount}?date={DateOnly.ToString("yyyy-MM-dd")}");
 
 				GetString = await Getresult.Content.ReadAsStringAsync();
 
@@ -178,9 +169,9 @@ namespace WykazPodatnikow.Core
 		/// Wyszukiwanie podmiotow po numerach kont.
 		/// </summary>
 		/// <param name="bankAccounts"></param>
-		/// <param name="dateTime"></param>
+		/// <param name="DateOnly"></param>
 		/// <returns></returns>
-		public async Task<EntityListResponse> GetDataFromBankAccountsAsync(string bankAccounts, DateTime dateTime)
+		public async Task<EntityListResponse> GetDataFromBankAccountsAsync(string bankAccounts, DateOnly DateOnly)
 		{
 			string GetString = string.Empty;
 			try
@@ -191,7 +182,7 @@ namespace WykazPodatnikow.Core
 						return new EntityListResponse { Exception = new Exception { Code = "6", Message = $"Invalid Bank Account: {item}" } };
 				}
 
-				var Getresult = await httpClient.GetAsync($"/api/search/bank-accounts/{bankAccounts}?date={dateTime.ToString("yyyy-MM-dd")}");
+				var Getresult = await httpClient.GetAsync($"/api/search/bank-accounts/{bankAccounts}?date={DateOnly.ToString("yyyy-MM-dd")}");
 
 				GetString = await Getresult.Content.ReadAsStringAsync();
 
@@ -212,9 +203,9 @@ namespace WykazPodatnikow.Core
 		/// </summary>
 		/// <param name="nip"></param>
 		/// <param name="bankAccount"></param>
-		/// <param name="dateTime"></param>
+		/// <param name="DateOnly"></param>
 		/// <returns></returns>
-		public async Task<EntityCheckResponse> CheckFromNipAndBankAccountsAsync(string nip, string bankAccount, DateTime dateTime)
+		public async Task<EntityCheckResponse> CheckFromNipAndBankAccountsAsync(string nip, string bankAccount, DateOnly DateOnly)
 		{
 			string GetString = string.Empty;
 			try
@@ -225,7 +216,7 @@ namespace WykazPodatnikow.Core
 				if (!Extension.IsValidBankAccountNumber(bankAccount))
 					return new EntityCheckResponse { Exception = new Exception { Code = "6", Message = "Invalid Bank Account" } };
 
-				var Getresult = await httpClient.GetAsync($"/api/check/nip/{nip}/bank-account/{bankAccount}?date={dateTime.ToString("yyyy-MM-dd")}");
+				var Getresult = await httpClient.GetAsync($"/api/check/nip/{nip}/bank-account/{bankAccount}?date={DateOnly.ToString("yyyy-MM-dd")}");
 
 				GetString = await Getresult.Content.ReadAsStringAsync();
 
@@ -246,9 +237,9 @@ namespace WykazPodatnikow.Core
 		/// </summary>
 		/// <param name="regon"></param>
 		/// <param name="bankAccount"></param>
-		/// <param name="dateTime"></param>
+		/// <param name="DateOnly"></param>
 		/// <returns></returns>
-		public async Task<EntityCheckResponse> CheckFromRegonAndBankAccountsAsync(string regon, string bankAccount, DateTime dateTime)
+		public async Task<EntityCheckResponse> CheckFromRegonAndBankAccountsAsync(string regon, string bankAccount, DateOnly DateOnly)
 		{
 			string GetString = string.Empty;
 			try
@@ -259,7 +250,7 @@ namespace WykazPodatnikow.Core
 				if (!Extension.IsValidBankAccountNumber(bankAccount))
 					return new EntityCheckResponse { Exception = new Exception { Code = "6", Message = "Invalid Bank Account" } };
 
-				var Getresult = await httpClient.GetAsync($"/api/check/regon/{regon}/bank-account/{bankAccount}?date={dateTime.ToString("yyyy-MM-dd")}");
+				var Getresult = await httpClient.GetAsync($"/api/check/regon/{regon}/bank-account/{bankAccount}?date={DateOnly.ToString("yyyy-MM-dd")}");
 
 				GetString = await Getresult.Content.ReadAsStringAsync();
 

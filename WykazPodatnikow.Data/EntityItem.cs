@@ -5,7 +5,7 @@ namespace WykazPodatnikow.Data
 	public record EntityItem
 	{
 		[JsonPropertyName("subject")]
-		public Subject Subject { get; set; }
+		public Entity Subject { get; set; }
 
 		[JsonPropertyName("requestId")]
 		public string RequestId { get; set; }

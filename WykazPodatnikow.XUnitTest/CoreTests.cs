@@ -12,9 +12,12 @@ namespace WykazPodatnikow.XUnitTest
 	{
 		private readonly VatWhiteList vatWhiteList;
 		private readonly VatWhiteListFlatFile vatWhiteListFlatFile;
+		private readonly DateOnly today;
 
 		public CoreTest()
 		{
+			today = DateOnly.FromDateTime(DateTime.Now);
+
 			try
 			{
 				vatWhiteList = new VatWhiteList(new HttpClient());
@@ -65,7 +68,7 @@ namespace WykazPodatnikow.XUnitTest
 		public async Task GetDataFromNip_GoodNip(string nip)
 		{
 			await Task.Delay(2000);
-			var result = await vatWhiteList.GetDataFromNipAsync(nip, DateTime.Now);
+			var result = await vatWhiteList.GetDataFromNipAsync(nip, today);
 
 			Assert.NotNull(result.Result);
 			Assert.NotNull(result.Result.RequestId);
@@ -76,7 +79,7 @@ namespace WykazPodatnikow.XUnitTest
 		[InlineData("123456")]
 		public async Task GetDataFromNip_BadNip(string nip)
 		{
-			var result = await vatWhiteList.GetDataFromNipAsync(nip, DateTime.Now);
+			var result = await vatWhiteList.GetDataFromNipAsync(nip, today);
 
 			Assert.NotNull(result.Exception);
 			Assert.Contains("6", result.Exception.Code);
@@ -87,7 +90,7 @@ namespace WykazPodatnikow.XUnitTest
 		public async Task GetDataFromNips_GoodNips(string nips, int ReturnCount)
 		{
 			await Task.Delay(2000);
-			var result = await vatWhiteList.GetDataFromNipsAsync(nips, DateTime.Now);
+			var result = await vatWhiteList.GetDataFromNipsAsync(nips, today);
 
 			Assert.NotNull(result.Result);
 			Assert.True(result.Result.Entries.Count == ReturnCount);
@@ -98,7 +101,7 @@ namespace WykazPodatnikow.XUnitTest
 		[InlineData("12345,123456,1234567")]
 		public async Task GetDataFromNips_BaadNips(string nips)
 		{
-			var result = await vatWhiteList.GetDataFromNipsAsync(nips, DateTime.Now);
+			var result = await vatWhiteList.GetDataFromNipsAsync(nips, today);
 
 			Assert.NotNull(result.Exception);
 			Assert.Contains("6", result.Exception.Code);
@@ -109,7 +112,7 @@ namespace WykazPodatnikow.XUnitTest
 		public async Task GetDataFromRegon_GoodRegon(string regon)
 		{
 			await Task.Delay(2000);
-			var result = await vatWhiteList.GetDataFromRegonAsync(regon, DateTime.Now);
+			var result = await vatWhiteList.GetDataFromRegonAsync(regon, today);
 
 			Assert.NotNull(result.Result);
 			Assert.NotNull(result.Result.RequestId);
@@ -120,7 +123,7 @@ namespace WykazPodatnikow.XUnitTest
 		[InlineData("12345")]
 		public async Task GetDataFromRegon_BadRegon(string regon)
 		{
-			var result = await vatWhiteList.GetDataFromRegonAsync(regon, DateTime.Now);
+			var result = await vatWhiteList.GetDataFromRegonAsync(regon, today);
 
 			Assert.NotNull(result.Exception);
 			Assert.Contains("6", result.Exception.Code);
@@ -131,7 +134,7 @@ namespace WykazPodatnikow.XUnitTest
 		public async Task GetDataFromRegons_GoodRegons(string regons, int ReturnCount)
 		{
 			await Task.Delay(2000);
-			var result = await vatWhiteList.GetDataFromRegonsAsync(regons, DateTime.Now);
+			var result = await vatWhiteList.GetDataFromRegonsAsync(regons, today);
 
 			Assert.NotNull(result.Result);
 			Assert.True(result.Result.Entries.Count == ReturnCount);
@@ -142,7 +145,7 @@ namespace WykazPodatnikow.XUnitTest
 		[InlineData("251546820,12345,368793892")]
 		public async Task GetDataFromRegons_BadRegons(string regons)
 		{
-			var result = await vatWhiteList.GetDataFromRegonsAsync(regons, DateTime.Now);
+			var result = await vatWhiteList.GetDataFromRegonsAsync(regons, today);
 
 			Assert.NotNull(result.Exception);
 			Assert.Contains("6", result.Exception.Code);
@@ -153,7 +156,7 @@ namespace WykazPodatnikow.XUnitTest
 		public async Task GetDataFromBankAccount_GoodBA(string bankaccount)
 		{
 			await Task.Delay(2000);
-			var result = await vatWhiteList.GetDataFromBankAccountAsync(bankaccount, DateTime.Now);
+			var result = await vatWhiteList.GetDataFromBankAccountAsync(bankaccount, today);
 
 			Assert.NotNull(result.Result);
 			Assert.NotNull(result.Result.RequestId);
@@ -163,7 +166,7 @@ namespace WykazPodatnikow.XUnitTest
 		[InlineData("1234567890")]
 		public async Task GetDataFromBankAccount_BadBA(string bankaccount)
 		{
-			var result = await vatWhiteList.GetDataFromBankAccountAsync(bankaccount, DateTime.Now);
+			var result = await vatWhiteList.GetDataFromBankAccountAsync(bankaccount, today);
 
 			Assert.NotNull(result.Exception);
 			Assert.Contains("6", result.Exception.Code);
@@ -174,7 +177,7 @@ namespace WykazPodatnikow.XUnitTest
 		public async Task GetDataFromBankAccounts_GoodBAs(string bankaccounts, int ReturnCount)
 		{
 			await Task.Delay(2000);
-			var result = await vatWhiteList.GetDataFromBankAccountsAsync(bankaccounts, DateTime.Now);
+			var result = await vatWhiteList.GetDataFromBankAccountsAsync(bankaccounts, today);
 
 			Assert.NotNull(result.Result);
 			Assert.True(result.Result.Entries.Count == ReturnCount);
@@ -186,7 +189,7 @@ namespace WykazPodatnikow.XUnitTest
 		[InlineData("74175010190000000011453438,11234567890,50109025900000000135521483")]
 		public async Task GetDataFromBankAccounts_BadBAs(string bankaccounts)
 		{
-			var result = await vatWhiteList.GetDataFromBankAccountsAsync(bankaccounts, DateTime.Now);
+			var result = await vatWhiteList.GetDataFromBankAccountsAsync(bankaccounts, today);
 
 			Assert.NotNull(result.Exception);
 			Assert.Contains("6", result.Exception.Code);
@@ -197,7 +200,7 @@ namespace WykazPodatnikow.XUnitTest
 		public async Task CheckFromNipAndBankAccounts_GoodCheck(string nip, string bankaccount)
 		{
 			await Task.Delay(2000);
-			var result = await vatWhiteList.CheckFromNipAndBankAccountsAsync(nip, bankaccount, DateTime.Now);
+			var result = await vatWhiteList.CheckFromNipAndBankAccountsAsync(nip, bankaccount, today);
 
 			Assert.NotNull(result.Result);
 			Assert.NotNull(result.Result.RequestId);
@@ -209,7 +212,7 @@ namespace WykazPodatnikow.XUnitTest
 		public async Task CheckFromNipAndBankAccounts_NotEqual(string nip, string bankaccount)
 		{
 			await Task.Delay(2000);
-			var result = await vatWhiteList.CheckFromNipAndBankAccountsAsync(nip, bankaccount, DateTime.Now);
+			var result = await vatWhiteList.CheckFromNipAndBankAccountsAsync(nip, bankaccount, today);
 
 			Assert.NotNull(result.Result);
 			Assert.NotNull(result.Result.RequestId);
@@ -220,7 +223,7 @@ namespace WykazPodatnikow.XUnitTest
 		[InlineData("123456", "39114010100000777770001001")]
 		public async Task CheckFromNipAndBankAccounts_BadNip(string nip, string bankaccount)
 		{
-			var result = await vatWhiteList.CheckFromNipAndBankAccountsAsync(nip, bankaccount, DateTime.Now);
+			var result = await vatWhiteList.CheckFromNipAndBankAccountsAsync(nip, bankaccount, today);
 
 			Assert.NotNull(result.Exception);
 			Assert.Contains("6", result.Exception.Code);
@@ -230,7 +233,7 @@ namespace WykazPodatnikow.XUnitTest
 		[InlineData("6222468959", "123456789062444")]
 		public async Task CheckFromNipAndBankAccounts_BadBA(string nip, string bankaccount)
 		{
-			var result = await vatWhiteList.CheckFromNipAndBankAccountsAsync(nip, bankaccount, DateTime.Now);
+			var result = await vatWhiteList.CheckFromNipAndBankAccountsAsync(nip, bankaccount, today);
 
 			Assert.NotNull(result.Exception);
 			Assert.Contains("6", result.Exception.Code);
@@ -241,7 +244,7 @@ namespace WykazPodatnikow.XUnitTest
 		public async Task CheckFromRegonAndBankAccounts_GoodCheck(string regon, string bankaccount)
 		{
 			await Task.Delay(2000);
-			var result = await vatWhiteList.CheckFromRegonAndBankAccountsAsync(regon, bankaccount, DateTime.Now);
+			var result = await vatWhiteList.CheckFromRegonAndBankAccountsAsync(regon, bankaccount, today);
 
 			Assert.NotNull(result.Result);
 			Assert.NotNull(result.Result.RequestId);
@@ -253,7 +256,7 @@ namespace WykazPodatnikow.XUnitTest
 		public async Task CheckFromRegonAndBankAccounts_BadEqual(string regon, string bankaccount)
 		{
 			await Task.Delay(2000);
-			var result = await vatWhiteList.CheckFromRegonAndBankAccountsAsync(regon, bankaccount, DateTime.Now);
+			var result = await vatWhiteList.CheckFromRegonAndBankAccountsAsync(regon, bankaccount, today);
 
 			Assert.NotNull(result.Result);
 			Assert.NotNull(result.Result.RequestId);
@@ -264,7 +267,7 @@ namespace WykazPodatnikow.XUnitTest
 		[InlineData("12345678", "39114010100000777770001001")]
 		public async Task CheckFromRegonAndBankAccounts_BadRegon(string regon, string bankaccount)
 		{
-			var result = await vatWhiteList.CheckFromRegonAndBankAccountsAsync(regon, bankaccount, DateTime.Now);
+			var result = await vatWhiteList.CheckFromRegonAndBankAccountsAsync(regon, bankaccount, today);
 
 			Assert.NotNull(result.Exception);
 			Assert.Contains("6", result.Exception.Code);
@@ -274,7 +277,7 @@ namespace WykazPodatnikow.XUnitTest
 		[InlineData("251546820", "1234564321232342355")]
 		public async Task CheckFromRegonAndBankAccounts_BadBA(string regon, string bankaccount)
 		{
-			var result = await vatWhiteList.CheckFromRegonAndBankAccountsAsync(regon, bankaccount, DateTime.Now);
+			var result = await vatWhiteList.CheckFromRegonAndBankAccountsAsync(regon, bankaccount, today);
 
 			Assert.NotNull(result.Exception);
 			Assert.Contains("6", result.Exception.Code);

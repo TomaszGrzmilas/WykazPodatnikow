@@ -1,20 +1,18 @@
-
 using System.Text.Json.Serialization;
 
-namespace WykazPodatnikow.Data
+namespace WykazPodatnikow.Data;
+public record EntityCheck
 {
-	public record EntityCheck
-	{
-		/// <summary>
-		/// Czy rachunek przypisany do podmiotu czynnego
-		/// </summary>
-		/// <value>Czy rachunek przypisany do podmiotu czynnego </value>
-		[JsonPropertyName("accountAssigned")]
-		public string AccountAssigned { get; set; }
+	/// <summary>
+	/// Czy rachunek przypisany do podmiotu czynnego
+	/// </summary>
+	/// <value>Czy rachunek przypisany do podmiotu czynnego </value>
+	[JsonPropertyName("accountAssigned")]
+	public string AccountAssigned { get; set; }
 
-		/// <summary>
-		/// Gets or Sets RequestId
-		[JsonPropertyName("requestId")]
-		public string RequestId { get; set; }
-	}
+	[JsonPropertyName("requestId")]
+	public string RequestId { get; set; }
+
+	[JsonPropertyName("requestDateTime")]
+	public string RequestDateTime { get; set; }
 }
