@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using WykazPodatnikow.Data;
-using Exception = WykazPodatnikow.Data.Exception;
 
 namespace WykazPodatnikow.Core
 {
@@ -37,7 +36,7 @@ namespace WykazPodatnikow.Core
 				{
 					return JsonSerializer.Deserialize<EntityResponse>(GetString, JsonSerializerOptions);
 				}
-				return new EntityResponse { Exception = JsonSerializer.Deserialize<Exception>(GetString, JsonSerializerOptions) };
+				return new EntityResponse { Exception = JsonSerializer.Deserialize<WhiteListCheckException>(GetString, JsonSerializerOptions) };
 			}
 			catch (System.Exception)
 			{
@@ -64,9 +63,9 @@ namespace WykazPodatnikow.Core
 				{
 					return JsonSerializer.Deserialize<EntityListResponse>(GetString, JsonSerializerOptions);
 				}
-				return new EntityListResponse { Exception = JsonSerializer.Deserialize<Exception>(GetString, JsonSerializerOptions) };
+				return new EntityListResponse { Exception = JsonSerializer.Deserialize<WhiteListCheckException>(GetString, JsonSerializerOptions) };
 			}
-			catch (System.Exception)
+			catch (Exception)
 			{
 				throw;
 			}
@@ -84,7 +83,7 @@ namespace WykazPodatnikow.Core
 			try
 			{
 				if (!Extension.IsValidREGON(regon))
-					return new EntityResponse { Exception = new Exception { Code = "6", Message = "Invalid Regon" } };
+					return new EntityResponse { Exception = new WhiteListCheckException { Code = "6", Message = "Invalid Regon" } };
 
 				var Getresult = await httpClient.GetAsync($"/api/search/regon/{regon}?date={DateOnly.ToString("yyyy-MM-dd")}");
 
@@ -94,7 +93,7 @@ namespace WykazPodatnikow.Core
 				{
 					return JsonSerializer.Deserialize<EntityResponse>(GetString, JsonSerializerOptions);
 				}
-				return new EntityResponse { Exception = JsonSerializer.Deserialize<Exception>(GetString, JsonSerializerOptions) };
+				return new EntityResponse { Exception = JsonSerializer.Deserialize<WhiteListCheckException>(GetString, JsonSerializerOptions) };
 			}
 			catch (System.Exception)
 			{
@@ -116,7 +115,7 @@ namespace WykazPodatnikow.Core
 				foreach (var item in regons.Split(","))
 				{
 					if (!Extension.IsValidREGON(item))
-						return new EntityListResponse { Exception = new Exception { Code = "6", Message = $"Invalid Regon: {item}" } };
+						return new EntityListResponse { Exception = new WhiteListCheckException { Code = "6", Message = $"Invalid Regon: {item}" } };
 				}
 
 				var Getresult = await httpClient.GetAsync($"/api/search/regons/{regons}?date={DateOnly.ToString("yyyy-MM-dd")}");
@@ -127,9 +126,9 @@ namespace WykazPodatnikow.Core
 				{
 					return JsonSerializer.Deserialize<EntityListResponse>(GetString, JsonSerializerOptions);
 				}
-				return new EntityListResponse { Exception = JsonSerializer.Deserialize<Exception>(GetString, JsonSerializerOptions) };
+				return new EntityListResponse { Exception = JsonSerializer.Deserialize<WhiteListCheckException>(GetString, JsonSerializerOptions) };
 			}
-			catch (System.Exception)
+			catch (Exception)
 			{
 				throw;
 			}
@@ -147,7 +146,7 @@ namespace WykazPodatnikow.Core
 			try
 			{
 				if (!Extension.IsValidBankAccountNumber(bankAccount))
-					return new EntityListResponse { Exception = new Exception { Code = "6", Message = "Invalid Bank Accounts" } };
+					return new EntityListResponse { Exception = new WhiteListCheckException { Code = "6", Message = "Invalid Bank Accounts" } };
 
 				var Getresult = await httpClient.GetAsync($"/api/search/bank-account/{bankAccount}?date={DateOnly.ToString("yyyy-MM-dd")}");
 
@@ -157,9 +156,9 @@ namespace WykazPodatnikow.Core
 				{
 					return JsonSerializer.Deserialize<EntityListResponse>(GetString, JsonSerializerOptions);
 				}
-				return new EntityListResponse { Exception = JsonSerializer.Deserialize<Exception>(GetString, JsonSerializerOptions) };
+				return new EntityListResponse { Exception = JsonSerializer.Deserialize<WhiteListCheckException>(GetString, JsonSerializerOptions) };
 			}
-			catch (System.Exception)
+			catch (Exception)
 			{
 				throw;
 			}
@@ -179,7 +178,7 @@ namespace WykazPodatnikow.Core
 				foreach (var item in bankAccounts.Split(","))
 				{
 					if (!Extension.IsValidBankAccountNumber(item))
-						return new EntityListResponse { Exception = new Exception { Code = "6", Message = $"Invalid Bank Account: {item}" } };
+						return new EntityListResponse { Exception = new WhiteListCheckException { Code = "6", Message = $"Invalid Bank Account: {item}" } };
 				}
 
 				var Getresult = await httpClient.GetAsync($"/api/search/bank-accounts/{bankAccounts}?date={DateOnly.ToString("yyyy-MM-dd")}");
@@ -190,9 +189,9 @@ namespace WykazPodatnikow.Core
 				{
 					return JsonSerializer.Deserialize<EntityListResponse>(GetString, JsonSerializerOptions);
 				}
-				return new EntityListResponse { Exception = JsonSerializer.Deserialize<Exception>(GetString, JsonSerializerOptions) };
+				return new EntityListResponse { Exception = JsonSerializer.Deserialize<WhiteListCheckException>(GetString, JsonSerializerOptions) };
 			}
-			catch (System.Exception)
+			catch (Exception)
 			{
 				throw;
 			}
@@ -211,10 +210,10 @@ namespace WykazPodatnikow.Core
 			try
 			{
 				if (!Extension.IsValidNIP(nip))
-					return new EntityCheckResponse { Exception = new Exception { Code = "6", Message = "Invalid nip" } };
+					return new EntityCheckResponse { Exception = new WhiteListCheckException { Code = "6", Message = "Invalid nip" } };
 
 				if (!Extension.IsValidBankAccountNumber(bankAccount))
-					return new EntityCheckResponse { Exception = new Exception { Code = "6", Message = "Invalid Bank Account" } };
+					return new EntityCheckResponse { Exception = new WhiteListCheckException { Code = "6", Message = "Invalid Bank Account" } };
 
 				var Getresult = await httpClient.GetAsync($"/api/check/nip/{nip}/bank-account/{bankAccount}?date={DateOnly.ToString("yyyy-MM-dd")}");
 
@@ -224,7 +223,7 @@ namespace WykazPodatnikow.Core
 				{
 					return JsonSerializer.Deserialize<EntityCheckResponse>(GetString, JsonSerializerOptions);
 				}
-				return new EntityCheckResponse { Exception = JsonSerializer.Deserialize<Exception>(GetString, JsonSerializerOptions) };
+				return new EntityCheckResponse { Exception = JsonSerializer.Deserialize<WhiteListCheckException>(GetString, JsonSerializerOptions) };
 			}
 			catch (System.Exception)
 			{
@@ -245,10 +244,10 @@ namespace WykazPodatnikow.Core
 			try
 			{
 				if (!Extension.IsValidREGON(regon))
-					return new EntityCheckResponse { Exception = new Exception { Code = "6", Message = "Invalid regon" } };
+					return new EntityCheckResponse { Exception = new WhiteListCheckException { Code = "6", Message = "Invalid regon" } };
 
 				if (!Extension.IsValidBankAccountNumber(bankAccount))
-					return new EntityCheckResponse { Exception = new Exception { Code = "6", Message = "Invalid Bank Account" } };
+					return new EntityCheckResponse { Exception = new WhiteListCheckException { Code = "6", Message = "Invalid Bank Account" } };
 
 				var Getresult = await httpClient.GetAsync($"/api/check/regon/{regon}/bank-account/{bankAccount}?date={DateOnly.ToString("yyyy-MM-dd")}");
 
@@ -258,9 +257,9 @@ namespace WykazPodatnikow.Core
 				{
 					return JsonSerializer.Deserialize<EntityCheckResponse>(GetString, JsonSerializerOptions);
 				}
-				return new EntityCheckResponse { Exception = JsonSerializer.Deserialize<Exception>(GetString, JsonSerializerOptions) };
+				return new EntityCheckResponse { Exception = JsonSerializer.Deserialize<WhiteListCheckException>(GetString, JsonSerializerOptions) };
 			}
-			catch (System.Exception)
+			catch (Exception)
 			{
 				throw;
 			}

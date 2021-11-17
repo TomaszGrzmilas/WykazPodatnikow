@@ -16,5 +16,5 @@ public record Entry
 	public List<Entity> Subjects { get; set; }
 
 	[JsonPropertyName("error")]
-	public Exception Error { get; set; }
+	public WhiteListCheckException Error { get; set; }
 }

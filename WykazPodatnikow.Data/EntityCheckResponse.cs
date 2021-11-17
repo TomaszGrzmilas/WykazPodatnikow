@@ -6,4 +6,6 @@ public record EntityCheckResponse
 {
 	[JsonPropertyName("result")]
 	public EntityCheck Result { get; set; }
+
+	public WhiteListCheckException Exception { get; set; }
 }

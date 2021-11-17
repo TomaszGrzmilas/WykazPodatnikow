@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace WykazPodatnikow.Data
 {
-	public record Exception
+	public record WhiteListCheckException
 	{
 		/// <summary>
 		/// Gets or Sets Message
