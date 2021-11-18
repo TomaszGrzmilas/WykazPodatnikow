@@ -93,7 +93,7 @@ namespace WykazPodatnikow.XUnitTest
 			var result = await vatWhiteList.GetDataFromNipsAsync(nips, today);
 
 			Assert.NotNull(result.Result);
-			Assert.True(result.Result.Subjects.Count == ReturnCount);
+			Assert.True(result.Result.Entries.Count == ReturnCount);
 			Assert.NotNull(result.Result.RequestId);
 		}
 
@@ -180,7 +180,7 @@ namespace WykazPodatnikow.XUnitTest
 			var result = await vatWhiteList.GetDataFromBankAccountsAsync(bankaccounts, today);
 
 			Assert.NotNull(result.Result);
-			Assert.True(result.Result.Subjects.Count == ReturnCount);
+			Assert.True(result.Result.Entries.Count == ReturnCount);
 			Assert.NotNull(result.Result.RequestId);
 
 		}

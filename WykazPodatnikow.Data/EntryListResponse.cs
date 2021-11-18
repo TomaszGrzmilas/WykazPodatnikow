@@ -11,4 +11,6 @@ public record EntryListResponse
 	[JsonPropertyName("result")]
 	public EntryList Result { get; set; }
 
+	public WhiteListCheckException Exception { get; set; }
+
 }

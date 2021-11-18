@@ -50,7 +50,7 @@ namespace WykazPodatnikow.Core
 		/// <param name="nips"></param>
 		/// <param name="DateOnly"></param>
 		/// <returns></returns>
-		public async Task<EntityListResponse> GetDataFromNipsAsync(string nips, DateOnly DateOnly)
+		public async Task<EntryListResponse> GetDataFromNipsAsync(string nips, DateOnly DateOnly)
 		{
 			string GetString = string.Empty;
 			try
@@ -61,9 +61,9 @@ namespace WykazPodatnikow.Core
 
 				if (Getresult.IsSuccessStatusCode)
 				{
-					return JsonSerializer.Deserialize<EntityListResponse>(GetString, JsonSerializerOptions);
+					return JsonSerializer.Deserialize<EntryListResponse>(GetString, JsonSerializerOptions);
 				}
-				return new EntityListResponse { Exception = JsonSerializer.Deserialize<WhiteListCheckException>(GetString, JsonSerializerOptions) };
+				return new EntryListResponse { Exception = JsonSerializer.Deserialize<WhiteListCheckException>(GetString, JsonSerializerOptions) };
 			}
 			catch (Exception)
 			{
@@ -170,7 +170,7 @@ namespace WykazPodatnikow.Core
 		/// <param name="bankAccounts"></param>
 		/// <param name="DateOnly"></param>
 		/// <returns></returns>
-		public async Task<EntityListResponse> GetDataFromBankAccountsAsync(string bankAccounts, DateOnly DateOnly)
+		public async Task<EntryListResponse> GetDataFromBankAccountsAsync(string bankAccounts, DateOnly DateOnly)
 		{
 			string GetString = string.Empty;
 			try
@@ -178,7 +178,7 @@ namespace WykazPodatnikow.Core
 				foreach (var item in bankAccounts.Split(","))
 				{
 					if (!Extension.IsValidBankAccountNumber(item))
-						return new EntityListResponse { Exception = new WhiteListCheckException { Code = "6", Message = $"Invalid Bank Account: {item}" } };
+						return new EntryListResponse { Exception = new WhiteListCheckException { Code = "6", Message = $"Invalid Bank Account: {item}" } };
 				}
 
 				var Getresult = await httpClient.GetAsync($"/api/search/bank-accounts/{bankAccounts}?date={DateOnly.ToString("yyyy-MM-dd")}");
@@ -187,9 +187,9 @@ namespace WykazPodatnikow.Core
 
 				if (Getresult.IsSuccessStatusCode)
 				{
-					return JsonSerializer.Deserialize<EntityListResponse>(GetString, JsonSerializerOptions);
+					return JsonSerializer.Deserialize<EntryListResponse>(GetString, JsonSerializerOptions);
 				}
-				return new EntityListResponse { Exception = JsonSerializer.Deserialize<WhiteListCheckException>(GetString, JsonSerializerOptions) };
+				return new EntryListResponse { Exception = JsonSerializer.Deserialize<WhiteListCheckException>(GetString, JsonSerializerOptions) };
 			}
 			catch (Exception)
 			{
