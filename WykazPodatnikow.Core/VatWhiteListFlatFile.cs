@@ -47,7 +47,7 @@ namespace WykazPodatnikow.Core
 		public FlatFile IsInFlatFile(string nip, string bankAccount)
 		{
 			if (!(flatFileData?.SkrotyPodatnikowCzynnych?.Count >= 0))
-				throw new System.Exception("Json file is not loaded. Use first LoadFlatFileAsync()");
+				throw new Exception("Json file is not loaded. Use first LoadFlatFileAsync()");
 
 			if (!nip.IsValidNIP())
 				return FlatFile.InvalidNip;

@@ -82,7 +82,7 @@ namespace WykazPodatnikow.XUnitTest
 			var result = await vatWhiteList.GetDataFromNipAsync(nip, today);
 
 			Assert.NotNull(result.Exception);
-			Assert.Contains("6", result.Exception.Code);
+			Assert.Contains("WL-113", result.Exception.Code);
 		}
 
 		[Theory]
@@ -103,8 +103,12 @@ namespace WykazPodatnikow.XUnitTest
 		{
 			var result = await vatWhiteList.GetDataFromNipsAsync(nips, today);
 
-			Assert.NotNull(result.Exception);
-			Assert.Contains("6", result.Exception.Code);
+			Assert.Equal(3, result.Result.Entries.Count);
+
+			foreach (var item in result.Result.Entries)
+			{
+				Assert.Contains("WL-113", item.Error.Code);
+			}
 		}
 
 		[Theory]
@@ -137,7 +141,7 @@ namespace WykazPodatnikow.XUnitTest
 			var result = await vatWhiteList.GetDataFromRegonsAsync(regons, today);
 
 			Assert.NotNull(result.Result);
-			Assert.True(result.Result.Subjects.Count == ReturnCount);
+			Assert.True(result.Result.Entries.Count == ReturnCount);
 			Assert.NotNull(result.Result.RequestId);
 		}
 

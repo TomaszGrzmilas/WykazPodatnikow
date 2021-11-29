@@ -10,7 +10,7 @@ namespace WykazPodatnikow.Data;
 public record Entry
 {
 	[JsonPropertyName("identifier")]
-	public string identifier { get; set; }
+	public string Identifier { get; set; }
 
 	[JsonPropertyName("subjects")]
 	public List<Entity> Subjects { get; set; }

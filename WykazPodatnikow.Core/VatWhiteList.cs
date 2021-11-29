@@ -82,9 +82,6 @@ namespace WykazPodatnikow.Core
 			string GetString = string.Empty;
 			try
 			{
-				if (!Extension.IsValidREGON(regon))
-					return new EntityResponse { Exception = new WhiteListCheckException { Code = "6", Message = "Invalid Regon" } };
-
 				var Getresult = await httpClient.GetAsync($"/api/search/regon/{regon}?date={DateOnly.ToString("yyyy-MM-dd")}");
 
 				GetString = await Getresult.Content.ReadAsStringAsync();
@@ -107,26 +104,20 @@ namespace WykazPodatnikow.Core
 		/// <param name="regons"></param>
 		/// <param name="DateOnly"></param>
 		/// <returns></returns>
-		public async Task<EntityListResponse> GetDataFromRegonsAsync(string regons, DateOnly DateOnly)
+		public async Task<EntryListResponse> GetDataFromRegonsAsync(string regons, DateOnly DateOnly)
 		{
 			string GetString = string.Empty;
 			try
 			{
-				foreach (var item in regons.Split(","))
-				{
-					if (!Extension.IsValidREGON(item))
-						return new EntityListResponse { Exception = new WhiteListCheckException { Code = "6", Message = $"Invalid Regon: {item}" } };
-				}
-
 				var Getresult = await httpClient.GetAsync($"/api/search/regons/{regons}?date={DateOnly.ToString("yyyy-MM-dd")}");
 
 				GetString = await Getresult.Content.ReadAsStringAsync();
 
 				if (Getresult.IsSuccessStatusCode)
 				{
-					return JsonSerializer.Deserialize<EntityListResponse>(GetString, JsonSerializerOptions);
+					return JsonSerializer.Deserialize<EntryListResponse>(GetString, JsonSerializerOptions);
 				}
-				return new EntityListResponse { Exception = JsonSerializer.Deserialize<WhiteListCheckException>(GetString, JsonSerializerOptions) };
+				return new EntryListResponse { Exception = JsonSerializer.Deserialize<WhiteListCheckException>(GetString, JsonSerializerOptions) };
 			}
 			catch (Exception)
 			{
@@ -145,9 +136,6 @@ namespace WykazPodatnikow.Core
 			string GetString = string.Empty;
 			try
 			{
-				if (!Extension.IsValidBankAccountNumber(bankAccount))
-					return new EntityListResponse { Exception = new WhiteListCheckException { Code = "6", Message = "Invalid Bank Accounts" } };
-
 				var Getresult = await httpClient.GetAsync($"/api/search/bank-account/{bankAccount}?date={DateOnly.ToString("yyyy-MM-dd")}");
 
 				GetString = await Getresult.Content.ReadAsStringAsync();
@@ -175,12 +163,6 @@ namespace WykazPodatnikow.Core
 			string GetString = string.Empty;
 			try
 			{
-				foreach (var item in bankAccounts.Split(","))
-				{
-					if (!Extension.IsValidBankAccountNumber(item))
-						return new EntryListResponse { Exception = new WhiteListCheckException { Code = "6", Message = $"Invalid Bank Account: {item}" } };
-				}
-
 				var Getresult = await httpClient.GetAsync($"/api/search/bank-accounts/{bankAccounts}?date={DateOnly.ToString("yyyy-MM-dd")}");
 
 				GetString = await Getresult.Content.ReadAsStringAsync();
@@ -209,12 +191,6 @@ namespace WykazPodatnikow.Core
 			string GetString = string.Empty;
 			try
 			{
-				if (!Extension.IsValidNIP(nip))
-					return new EntityCheckResponse { Exception = new WhiteListCheckException { Code = "6", Message = "Invalid nip" } };
-
-				if (!Extension.IsValidBankAccountNumber(bankAccount))
-					return new EntityCheckResponse { Exception = new WhiteListCheckException { Code = "6", Message = "Invalid Bank Account" } };
-
 				var Getresult = await httpClient.GetAsync($"/api/check/nip/{nip}/bank-account/{bankAccount}?date={DateOnly.ToString("yyyy-MM-dd")}");
 
 				GetString = await Getresult.Content.ReadAsStringAsync();
@@ -225,7 +201,7 @@ namespace WykazPodatnikow.Core
 				}
 				return new EntityCheckResponse { Exception = JsonSerializer.Deserialize<WhiteListCheckException>(GetString, JsonSerializerOptions) };
 			}
-			catch (System.Exception)
+			catch (Exception)
 			{
 				throw;
 			}
@@ -243,12 +219,6 @@ namespace WykazPodatnikow.Core
 			string GetString = string.Empty;
 			try
 			{
-				if (!Extension.IsValidREGON(regon))
-					return new EntityCheckResponse { Exception = new WhiteListCheckException { Code = "6", Message = "Invalid regon" } };
-
-				if (!Extension.IsValidBankAccountNumber(bankAccount))
-					return new EntityCheckResponse { Exception = new WhiteListCheckException { Code = "6", Message = "Invalid Bank Account" } };
-
 				var Getresult = await httpClient.GetAsync($"/api/check/regon/{regon}/bank-account/{bankAccount}?date={DateOnly.ToString("yyyy-MM-dd")}");
 
 				GetString = await Getresult.Content.ReadAsStringAsync();
